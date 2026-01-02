@@ -168,128 +168,6 @@ const allMessages = [
   },
 ]
 
-// export const ConversationDemo = () => {
-//   const [messages, setMessages] = useState<typeof allMessages>([])
-//   const [streamingMessageIndex, setStreamingMessageIndex] = useState<
-//     number | null
-//   >(null)
-//   const [streamingContent, setStreamingContent] = useState("")
-
-//   useEffect(() => {
-//     const timeouts: NodeJS.Timeout[] = []
-//     const intervals: NodeJS.Timeout[] = []
-//     let currentMessageIndex = 0
-
-//     const addNextMessage = () => {
-//       if (currentMessageIndex >= allMessages.length) return
-
-//       const message = allMessages[currentMessageIndex]
-//       const part = message.parts[0]
-
-//       if (message.role === "assistant" && "tokens" in part && part.tokens) {
-//         setStreamingMessageIndex(currentMessageIndex)
-//         setStreamingContent("")
-
-//         let currentContent = ""
-//         let tokenIndex = 0
-
-//         const streamInterval = setInterval(() => {
-//           if (tokenIndex < part.tokens.length) {
-//             currentContent += part.tokens[tokenIndex]
-//             setStreamingContent(currentContent)
-//             tokenIndex++
-//           } else {
-//             clearInterval(streamInterval)
-//             setMessages((prev) => [...prev, message])
-//             setStreamingMessageIndex(null)
-//             setStreamingContent("")
-//             currentMessageIndex++
-
-//             // Add next message after a delay
-//             timeouts.push(setTimeout(addNextMessage, 500))
-//           }
-//         }, 100)
-
-//         intervals.push(streamInterval)
-//       } else {
-//         setMessages((prev) => [...prev, message])
-//         currentMessageIndex++
-
-//         timeouts.push(setTimeout(addNextMessage, 800))
-//       }
-//     }
-
-//     // Start after 1 second
-//     timeouts.push(setTimeout(addNextMessage, 1000))
-
-//     return () => {
-//       timeouts.forEach((timeout) => clearTimeout(timeout))
-//       intervals.forEach((interval) => clearInterval(interval))
-//     }
-//   }, [])
-
-//   return (
-//     <Card className="relative mx-auto my-0  h py-0">
-//       <div className="flex h-full flex-col">
-//         <Conversation>
-//           <ConversationContent>
-//             {messages.length === 0 && streamingMessageIndex === null ? (
-//               <ConversationEmptyState
-//                 icon={<Orb className="size-12" />}
-//                 title="Start a conversation"
-//                 description="This is a simulated conversation"
-//               />
-//             ) : (
-//               <>
-//                 {messages.map((message) => (
-//                   <Message from={message.role} key={message.id}>
-//                     <MessageContent>
-//                       {message.parts.map((part, i) => {
-//                         switch (part.type) {
-//                           case "text":
-//                             return (
-//                               <Response key={`${message.id}-${i}`}>
-//                                 {part.text}
-//                               </Response>
-//                             )
-//                           default:
-//                             return null
-//                         }
-//                       })}
-//                     </MessageContent>
-//                     {message.role === "assistant" && (
-//                       <div className="ring-border size-8 overflow-hidden rounded-full ring-1">
-//                         <Orb className="h-full w-full" agentState={null} />
-//                       </div>
-//                     )}
-//                   </Message>
-//                 ))}
-//                 {streamingMessageIndex !== null && (
-//                   <Message
-//                     from={allMessages[streamingMessageIndex].role}
-//                     key={`streaming-${streamingMessageIndex}`}
-//                   >
-//                     <MessageContent>
-//                       <Response>{streamingContent || "\u200B"}</Response>
-//                     </MessageContent>
-//                     {allMessages[streamingMessageIndex].role ===
-//                       "assistant" && (
-//                       <div className="ring-border size-8 overflow-hidden rounded-full ring-1">
-//                         <Orb className="h-full w-full" agentState="talking" />
-//                       </div>
-//                     )}
-//                   </Message>
-//                 )}
-//               </>
-//             )}
-//           </ConversationContent>
-//           <ConversationScrollButton />
-//         </Conversation>
-//       </div>
-//     </Card>
-//   )
-// }
-
 
 export const ConversationDemo = () => {
   const [messages, setMessages] = useState<typeof allMessages>([])
@@ -367,8 +245,8 @@ export const ConversationDemo = () => {
       h-[70vh]
       py-0
       px-2
-      [&::-webkit-scrollbar]:w-[4px] 
-  [&::-webkit-scrollbar]:h-[4px]
+      [&::-webkit-scrollbar]:w- 
+  [&::-webkit-scrollbar]:h-
   [&::-webkit-scrollbar-thumb]:bg-gray-400 
   [&::-webkit-scrollbar-thumb]:rounded-full 
   [&::-webkit-scrollbar-track]:bg-transparent
