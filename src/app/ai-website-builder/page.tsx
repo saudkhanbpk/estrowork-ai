@@ -15,6 +15,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from "next/navigation"
+
+
 
 // --- SUB-COMPONENT: File Preview Chips ---
 const FilePreviewArea = ({ files, onRemove }: { files: File[], onRemove: (i: number) => void }) => {
@@ -35,29 +38,29 @@ const FilePreviewArea = ({ files, onRemove }: { files: File[], onRemove: (i: num
 }
 
 // --- SUB-COMPONENT: Input Bar (Defined outside to prevent focus loss) ---
-const InputSection = ({ 
-  prompt, 
-  setPrompt, 
-  onSend, 
-  loading, 
-  attachedFiles, 
-  onRemoveFile, 
-  onFileSelect, 
+const InputSection = ({
+  prompt,
+  setPrompt,
+  onSend,
+  loading,
+  attachedFiles,
+  onRemoveFile,
+  onFileSelect,
   fileInputRef,
-  isLanding = false 
+  isLanding = false
 }: any) => {
   return (
     <div className="w-full relative">
       <FilePreviewArea files={attachedFiles} onRemove={onRemoveFile} />
       <div className={`relative flex items-end gap-2 bg-white border-2 border-gray-200 p-2 shadow-sm transition-all focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/10 
         ${isLanding ? "rounded-2xl sm:rounded-3xl p-3 shadow-lg" : "rounded-2xl"}`}>
-        
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          className="hidden" 
-          multiple 
-          onChange={onFileSelect} 
+
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="hidden"
+          multiple
+          onChange={onFileSelect}
         />
 
         <DropdownMenu>
@@ -123,10 +126,18 @@ export default function AIBuilderPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [hasStarted, setHasStarted] = useState(false)
   const [attachedFiles, setAttachedFiles] = useState<File[]>([])
-  
+
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      router.push("/login") // redirect to login if token doesn't exist
+    }
+  }, [router])
 
   useEffect(() => {
     if (shouldAutoScroll) {
@@ -144,7 +155,7 @@ export default function AIBuilderPage() {
     const files = e.target.files
     if (!files) return
     setAttachedFiles((prev) => [...prev, ...Array.from(files)])
-    e.target.value = "" 
+    e.target.value = ""
   }
 
   const removeFile = (index: number) => {
@@ -153,20 +164,20 @@ export default function AIBuilderPage() {
 
   const handleSendPrompt = async () => {
     if (!prompt.trim() && attachedFiles.length === 0) return
-    if (loading) return 
+    if (loading) return
 
     if (!hasStarted) setHasStarted(true)
 
     setLoading(true)
     setShouldAutoScroll(true)
-    
+
     const currentPrompt = prompt
     const fileNames = attachedFiles.map(f => f.name).join(", ")
     const displayContent = currentPrompt + (fileNames ? `\n\n[Attached: ${fileNames}]` : "")
 
     setMessages((prev) => [...prev, { role: "user", content: displayContent }])
     setPrompt("")
-    setAttachedFiles([]) 
+    setAttachedFiles([])
 
     // Simulated AI Processing
     setTimeout(() => {
