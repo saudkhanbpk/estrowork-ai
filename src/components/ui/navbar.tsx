@@ -37,7 +37,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Nav */}
-            <ul className="hidden md:flex items-center gap-2">
+            {/* <ul className="hidden md:flex items-center gap-2">
               {["Products", "For Work", "Resources"].map((item) => (
                 <li key={item}>
                   <button
@@ -59,7 +59,7 @@ const Navbar = () => {
                   </a>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
 
           {/* Right side */}
