@@ -6,11 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { LucideMic, LucideArrowUp } from "lucide-react";
 
-export default function SearchBar() {
+export default function PromptInput() {
     const [query, setQuery] = useState("");
     const router = useRouter();
 
-    const handleSearch = () => {
+    const handlePrompt = () => {
         // Only redirect if there is actual text
         if (query.trim()) {
             // Option 1: Basic redirect
@@ -23,7 +23,7 @@ export default function SearchBar() {
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter") {
-            handleSearch();
+            handlePrompt();
         }
     };
 
@@ -42,7 +42,7 @@ export default function SearchBar() {
             </Button>
             <Button
                 size="icon"
-                onClick={handleSearch}
+                onClick={handlePrompt}
                 // We change background based on whether query exists
                 className={`ml-2 rounded-full transition-all duration-200 ${query.trim()
                     ? "bg-teal-700 hover:bg-teal-800 cursor-pointer"
