@@ -13,11 +13,7 @@ export default function PromptInput() {
     const handlePrompt = () => {
         // Only redirect if there is actual text
         if (query.trim()) {
-            // Option 1: Basic redirect
-            router.push("/signup");
-
-            // Option 2: Redirect and pass the prompt as a URL parameter
-            // router.push(`/ai-website-builder?prompt=${encodeURIComponent(query)}`);
+            router.push(`/ai-website-builder?prompt=${encodeURIComponent(query)}`);
         }
     };
 

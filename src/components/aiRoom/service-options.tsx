@@ -11,6 +11,7 @@ const services = [
         image: "/pos_system_interface_1767769386214.png",
         color: "from-blue-500/10 to-blue-500/5",
         hoverColor: "group-hover:text-blue-600",
+        id: "pos"
     },
     {
         title: "Sales Dashboard",
@@ -18,6 +19,7 @@ const services = [
         image: "/sales_dashboard_ui_1767769415198.png",
         color: "from-purple-500/10 to-purple-500/5",
         hoverColor: "group-hover:text-purple-600",
+        id: "sales"
     },
     {
         title: "E-commerce",
@@ -25,6 +27,7 @@ const services = [
         image: "/ecommerce_platform_mockup_1767769431122.png",
         color: "from-pink-500/10 to-pink-500/5",
         hoverColor: "group-hover:text-pink-600",
+        id: "ecommerce"
     },
     {
         title: "Customer CRM",
@@ -32,15 +35,25 @@ const services = [
         image: "/customer_crm_interface_1767769445578.png",
         color: "from-teal-500/10 to-teal-500/5",
         hoverColor: "group-hover:text-teal-600",
+        id: "crm"
     },
 ];
 
+import { useRouter } from "next/navigation";
+
 export function ServiceOptions() {
+    const router = useRouter();
+
+    const handleServiceClick = (serviceId: string) => {
+        router.push(`/ai-website-builder?service=${serviceId}`);
+    };
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl mx-auto p-4">
             {services.map((service, index) => (
                 <Card
                     key={index}
+                    onClick={() => handleServiceClick(service.id)}
                     className="group overflow-hidden border-0 bg-white/50 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
                 >
                     <div className={cn("absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300", service.color)} />
