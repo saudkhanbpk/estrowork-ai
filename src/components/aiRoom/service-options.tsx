@@ -45,7 +45,7 @@ export function ServiceOptions() {
     const router = useRouter();
 
     const handleServiceClick = (serviceId: string) => {
-        router.push(`/ai-website-builder?service=${serviceId}`);
+        router.push(`/requirements-intake?service=${serviceId}`);
     };
 
     return (

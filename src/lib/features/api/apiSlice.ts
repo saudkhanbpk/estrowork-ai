@@ -30,7 +30,14 @@ export const apiSlice = createApi({
                 body: userData,
             }),
         }),
+        analyzeRequirement: builder.mutation({
+            query: (data) => ({
+                url: '/requirements/analyze',
+                method: 'POST',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = apiSlice;
+export const { useLoginMutation, useRegisterMutation, useAnalyzeRequirementMutation } = apiSlice;

@@ -13,7 +13,7 @@ export default function PromptInput() {
     const handlePrompt = () => {
         // Only redirect if there is actual text
         if (query.trim()) {
-            router.push(`/ai-website-builder?prompt=${encodeURIComponent(query)}`);
+            router.push(`/requirements-intake?prompt=${encodeURIComponent(query)}`);
         }
     };
 
