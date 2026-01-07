@@ -18,8 +18,9 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API
+// Re-checking imports. The file path is `src/lib/features/api/apiSlice.ts`.
+import { useLoginMutation } from "@/lib/features/api/apiSlice"
+import { Eye, EyeOff } from "lucide-react"
 
 export function LoginForm({
   className,
@@ -27,45 +28,39 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
- 
+
+  const [login, { isLoading: loading, error: mutationError }] = useLoginMutation();
+  // We can still select user/error from auth slice if needed, but mutation state is sufficient for local feedback
+  // const globalError = useAppSelector((state) => state.auth.error); 
+
   const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Helper to parse error message from RTK Query error
+  const getErrorMessage = (err: any) => {
+    if (!err) return null;
+    if (typeof err === 'string') return err;
+    if (err.data && err.data.message) return err.data.message;
+    if (err.message) return err.message;
+    return "Login failed";
+  };
+
+  const error = getErrorMessage(mutationError);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    setError(null)
 
     try {
-      const res = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      })
+      // unwrap() throws error if mutation fails, allowing catch block
+      const result = await login({ email, password }).unwrap();
 
-      const data = await res.json()
-      if (!res.ok) {
-        throw new Error(data.message || "Login failed")
-      }
-          console.log(data.token , "this is token");
-      // ✅ Example: save token
-        // document.cookie = `token=${data.token}; path=/`
-        localStorage.setItem("token", data.token)
-
-
-      alert("User login sucessfully");
-
+      // Success logic
+      // alert("User login successfully"); 
       router.push("/ai-website-builder")
 
     } catch (err: any) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
+      console.error("Login failed:", err);
     }
   }
 
@@ -81,7 +76,7 @@ export function LoginForm({
 
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <FieldGroup>
+            <FieldGroup className="gap-4">
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
@@ -91,6 +86,7 @@ export function LoginForm({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  className="h-12"
                 />
               </Field>
 
@@ -104,13 +100,23 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="h-12 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </Field>
 
               {error && (
@@ -120,11 +126,11 @@ export function LoginForm({
               )}
 
               <Field>
-                <Button type="submit" disabled={loading}>
+                <Button type="submit" disabled={loading} className="w-full h-12">
                   {loading ? "Logging in..." : "Login"}
                 </Button>
 
-                <Button variant="outline" type="button">
+                <Button variant="outline" type="button" className="w-full h-12">
                   Login with Google
                 </Button>
 
