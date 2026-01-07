@@ -60,27 +60,27 @@ export default function OnboardingModal() {
     } else {
       // 🔥 This is gold data for AI
       console.log({ role, intents, level })
-      router.push("/ai-website-builder")
+      router.push("/requirements-intake?service")
     }
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center px-6">
-      <Card className="w-full max-w-md rounded-2xl p-6 shadow-xl">
+    <div className="fixed inset-0 flex items-center justify-center px-6 bg-gradient-to-br from-teal-50 via-white to-teal-50">
+      <Card className="w-full max-w-md rounded-2xl p-6 shadow-2xl border-teal-100 bg-white/80 backdrop-blur-md">
         {/* Header */}
-        <div className="text-center mb-4">
-          <h1 className="text-lg font-semibold">
+        <div className="text-center mb-6">
+          <h1 className="text-xl font-bold text-teal-900">
             {step === 1 && "Who are you?"}
             {step === 2 && "What do you want to do?"}
             {step === 3 && "Your experience level"}
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-teal-600/70 mt-1 font-medium">
             Step {step} of 3
           </p>
         </div>
 
         {/* Content */}
-        <div className="space-y-3 max-h-[55vh] overflow-y-auto">
+        <div className="space-y-3 max-h-[55vh] overflow-y-auto pr-1">
           {step === 1 &&
             ["Organization", "Personal / Freelancer", "Student / Education"].map(
               (item) => (
@@ -149,7 +149,7 @@ export default function OnboardingModal() {
 
         {/* Footer */}
         <Button
-          className="w-full mt-6"
+          className="w-full mt-8 h-11 bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 text-white shadow-md shadow-teal-500/10 transition-all duration-300 font-medium text-base rounded-xl"
           disabled={nextDisabled}
           onClick={handleNext}
         >
@@ -174,14 +174,14 @@ function Option({
     <div
       onClick={onClick}
       className={clsx(
-        "cursor-pointer rounded-lg border p-4 transition flex items-center justify-between",
+        "cursor-pointer rounded-xl border p-4 transition-all duration-200 flex items-center justify-between group",
         selected
-          ? "border-primary bg-primary/5"
-          : "hover:border-muted-foreground"
+          ? "border-teal-500 bg-teal-50/60 shadow-sm"
+          : "border-teal-100 hover:border-teal-300 hover:bg-teal-50/30 bg-white/40"
       )}
     >
-      <span className="font-medium">{label}</span>
-      {selected && <CheckCircle2 className="w-5 h-5 text-primary" />}
+      <span className={clsx("font-medium transition-colors", selected ? "text-teal-900" : "text-gray-700 group-hover:text-teal-800")}>{label}</span>
+      {selected && <CheckCircle2 className="w-5 h-5 text-teal-600 animate-in zoom-in spin-in-90 duration-300" />}
     </div>
   )
 }

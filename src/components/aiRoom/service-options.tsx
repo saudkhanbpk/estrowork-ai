@@ -71,7 +71,7 @@ export function ServiceOptions() {
                             <h3 className={cn("font-bold text-lg mb-1 transition-colors duration-200", service.hoverColor)}>
                                 {service.title}
                             </h3>
-                            <p className="text-sm text-gray-500 leading-relaxed">
+                            <p className="text-sm text-slate-600/90 leading-relaxed">
                                 {service.description}
                             </p>
                         </div>

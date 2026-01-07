@@ -145,16 +145,16 @@ function RequirementsIntakeContent() {
     };
 
     return (
-        <div className="flex h-[100dvh] w-full flex-col items-center bg-gray-50 p-2 sm:p-4 dark:bg-zinc-900">
-            <Card className="flex h-full w-full max-w-4xl flex-col overflow-hidden border bg-white shadow-xl dark:bg-zinc-800">
+        <div className="flex h-[100dvh] w-full flex-col items-center bg-gradient-to-br from-teal-50 via-white to-teal-50 p-2 sm:p-4">
+            <Card className="flex h-full w-full max-w-4xl flex-col overflow-hidden border border-teal-100 bg-white/80 backdrop-blur-md shadow-2xl rounded-3xl">
                 <div className="flex-1 overflow-hidden relative">
                     <Conversation className="h-full">
                         <ConversationContent className="space-y-4 pb-4">
                             {messages.length === 0 && !isLoading && !isStreaming ? (
                                 <ConversationEmptyState
-                                    icon={<Orb className="size-12" />}
-                                    title="AI Requirements Analyst"
-                                    description="Start describing your project..."
+                                    icon={<Orb className="size-20" colors={["#5eead4", "#2dd4bf"]} />}
+                                    title={<span className="text-xl font-bold text-teal-900">AI Requirements Analyst</span>}
+                                    description={<span className="text-teal-600/80">Start describing your project...</span>}
                                 />
                             ) : (
                                 <>
@@ -164,8 +164,8 @@ function RequirementsIntakeContent() {
                                                 <Response>{message.content}</Response>
                                             </MessageContent>
                                             {message.role === "assistant" && (
-                                                <div className="ring-border size-8 overflow-hidden rounded-full ring-1 ml-2">
-                                                    <Orb className="h-full w-full" agentState={null} />
+                                                <div className="ring-border size-8 overflow-hidden rounded-full ring-1 ring-teal-200 ml-2">
+                                                    <Orb className="h-full w-full" agentState={null} colors={["#5eead4", "#2dd4bf"]} />
                                                 </div>
                                             )}
                                         </Message>
@@ -174,10 +174,10 @@ function RequirementsIntakeContent() {
                                     {/* Loading State */}
                                     {isLoading && !isStreaming && (
                                         <div className="flex items-center gap-2 p-4">
-                                            <div className="ring-border size-8 overflow-hidden rounded-full ring-1">
-                                                <Orb className="h-full w-full" agentState="talking" />
+                                            <div className="ring-border size-8 overflow-hidden rounded-full ring-1 ring-teal-200">
+                                                <Orb className="h-full w-full" agentState="talking" colors={["#5eead4", "#2dd4bf"]} />
                                             </div>
-                                            <span className="text-sm text-muted-foreground animate-pulse">Thinking...</span>
+                                            <span className="text-sm text-teal-600 animate-pulse font-medium">Thinking...</span>
                                         </div>
                                     )}
 
@@ -187,8 +187,8 @@ function RequirementsIntakeContent() {
                                             <MessageContent>
                                                 <Response>{streamingContent || "\u200B"}</Response>
                                             </MessageContent>
-                                            <div className="ring-border size-8 overflow-hidden rounded-full ring-1 ml-2">
-                                                <Orb className="h-full w-full" agentState="talking" />
+                                            <div className="ring-border size-8 overflow-hidden rounded-full ring-1 ring-teal-200 ml-2">
+                                                <Orb className="h-full w-full" agentState="talking" colors={["#5eead4", "#2dd4bf"]} />
                                             </div>
                                         </Message>
                                     )}
@@ -200,14 +200,14 @@ function RequirementsIntakeContent() {
                 </div>
 
                 {/* Input Area */}
-                <div className="p-4 border-t bg-background/50 backdrop-blur-sm">
+                <div className="p-4 border-t border-teal-100 bg-white/60 backdrop-blur-md">
                     <div className="relative">
                         <Textarea
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="Type your requirements here or use speech..."
-                            className="min-h-[80px] resize-none rounded-2xl px-4 py-3 pr-14 shadow-sm"
+                            className="min-h-[80px] resize-none rounded-2xl px-5 py-4 pr-14 shadow-inner border-teal-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 bg-white/50 text-teal-900 placeholder:text-teal-400/70 transition-all duration-300"
                         />
                         <div className="absolute right-3 bottom-3 flex items-center gap-2">
                             <SpeechInput
@@ -236,7 +236,7 @@ function RequirementsIntakeContent() {
                             </SpeechInput>
                         </div>
                     </div>
-                    <div className="mt-2 text-xs text-muted-foreground text-center">
+                    <div className="mt-3 text-xs text-teal-600/60 text-center font-medium">
                         Press Enter to send, Shift+Enter for new line
                     </div>
                 </div>
@@ -247,7 +247,14 @@ function RequirementsIntakeContent() {
 
 export default function RequirementsIntakePage() {
     return (
-        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading interface...</div>}>
+        <Suspense fallback={
+            <div className="flex flex-col items-center justify-center h-screen w-full bg-gradient-to-br from-teal-50 via-white to-teal-50 gap-4">
+                <div className="size-16 ring-1 ring-teal-200 rounded-full overflow-hidden shadow-lg shadow-teal-100">
+                    <Orb className="h-full w-full" colors={["#5eead4", "#2dd4bf"]} />
+                </div>
+                <div className="text-teal-600 animate-pulse font-medium">Loading interface...</div>
+            </div>
+        }>
             <RequirementsIntakeContent />
         </Suspense>
     )

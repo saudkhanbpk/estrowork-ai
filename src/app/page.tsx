@@ -4,9 +4,9 @@ import PromptInput from "@/components/aiRoom/input";
 
 export default function Home() {
   return (
-    <div className="bg-linear-to-br from-teal-50 via-white to-teal-50 min-h-screen pb-32">
+    <div className="bg-gradient-to-br from-teal-50 via-white to-teal-50 min-h-screen pb-32">
       <h1 className="
-        flex justify-center items-center text-gray-700
+        flex justify-center items-center text-teal-900
         font-bold
         px-4 py-8
         text-center

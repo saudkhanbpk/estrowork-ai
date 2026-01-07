@@ -59,7 +59,7 @@ export function LoginForm({
 
       // Success logic
       // alert("User login successfully"); 
-      router.push(next || "/ai-website-builder")
+      router.push(next || "/requirements-intake?service")
 
     } catch (err: any) {
       console.error("Login failed:", err);
@@ -68,38 +68,38 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
+      <Card className="border-teal-100 shadow-xl bg-white/80 backdrop-blur-sm">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center text-teal-900">Welcome back</CardTitle>
+          <CardDescription className="text-center text-teal-600/80">
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <FieldGroup className="gap-4">
+            <FieldGroup className="gap-5">
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email" className="text-teal-900 font-medium">Email</FieldLabel>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-12"
+                  className="h-11 border-teal-200 focus:border-teal-500 focus:ring-teal-500/20 bg-white/50"
                 />
               </Field>
 
               <Field>
                 <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel htmlFor="password" className="text-teal-900 font-medium">Password</FieldLabel>
                   <a
                     href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    className="ml-auto inline-block text-sm text-teal-600 underline-offset-4 hover:text-teal-800 hover:underline transition-colors"
                   >
-                    Forgot your password?
+                    Forgot password?
                   </a>
                 </div>
                 <div className="relative">
@@ -109,12 +109,12 @@ export function LoginForm({
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="h-12 pr-10"
+                    className="h-11 pr-10 border-teal-200 focus:border-teal-500 focus:ring-teal-500/20 bg-white/50"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-teal-400 hover:text-teal-600 transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -122,23 +122,47 @@ export function LoginForm({
               </Field>
 
               {error && (
-                <FieldDescription className="text-red-500 text-center">
+                <FieldDescription className="text-red-500 text-center bg-red-50 p-2 rounded-md text-sm border border-red-100">
                   {error}
                 </FieldDescription>
               )}
 
-              <Field>
-                <Button type="submit" disabled={loading} className="w-full h-12">
-                  {loading ? "Logging in..." : "Login"}
+              <Field className="space-y-4 pt-2">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full h-11 bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 text-white shadow-md shadow-teal-500/10 transition-all duration-300 font-medium text-base"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      Logging in...
+                    </span>
+                  ) : "Login"}
                 </Button>
 
-                <Button variant="outline" type="button" className="w-full h-12">
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t border-teal-100" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-white px-2 text-teal-400">Or continue with</span>
+                  </div>
+                </div>
+
+                <Button
+                  variant="outline"
+                  type="button"
+                  className="w-full h-11 border-teal-200 text-teal-700 hover:bg-teal-50 hover:text-teal-900 hover:border-teal-300 transition-all duration-300"
+                >
                   Login with Google
                 </Button>
 
-                <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="/signup">Sign up</a>
-                </FieldDescription>
+                <div className="text-center text-sm text-gray-500 mt-4">
+                  Don&apos;t have an account?{" "}
+                  <a href="/signup" className="font-semibold text-teal-600 hover:text-teal-800 hover:underline transition-colors">
+                    Sign up
+                  </a>
+                </div>
               </Field>
             </FieldGroup>
           </form>
