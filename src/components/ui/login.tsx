@@ -17,7 +17,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 // Re-checking imports. The file path is `src/lib/features/api/apiSlice.ts`.
 import { useLoginMutation } from "@/lib/features/api/apiSlice"
 import { Eye, EyeOff } from "lucide-react"
@@ -34,6 +34,8 @@ export function LoginForm({
   // const globalError = useAppSelector((state) => state.auth.error); 
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next");
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -57,7 +59,7 @@ export function LoginForm({
 
       // Success logic
       // alert("User login successfully"); 
-      router.push("/ai-website-builder")
+      router.push(next || "/ai-website-builder")
 
     } catch (err: any) {
       console.error("Login failed:", err);
