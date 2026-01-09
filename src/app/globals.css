@@ -157,3 +157,37 @@
 .animate-fade-in-up {
   animation: fade-in-up 0.8s ease-out forwards;
 }
+
+/* Sandpack Preview Full Height Styles */
+.sandpack-preview-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sandpack-preview-container > div {
+  height: 100%;
+  flex: 1;
+}
+
+.sandpack-preview-container .sp-wrapper,
+.sandpack-preview-container .sp-layout,
+.sandpack-preview-container .sp-stack,
+.sandpack-preview-container .sp-preview,
+.sandpack-preview-container .sp-preview-container,
+.sandpack-preview-container .sp-preview-iframe,
+.sandpack-preview-container iframe {
+  height: 100% !important;
+  min-height: 100% !important;
+  flex: 1 !important;
+}
+
+.sandpack-preview-container .sp-preview-actions {
+  z-index: 10;
+}
+
+/* Ensure the iframe container fills available space */
+.sandpack-preview-container [class*="sp-"] {
+  max-height: none !important;
+}
